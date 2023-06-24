@@ -1,2 +1,3 @@
-Morgan tell about all frontend calls and print information 
+1->Morgan tell about all frontend calls and print information 
 in console.
+2-> while updating password length must be greater or equal to 6
