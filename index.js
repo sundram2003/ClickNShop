@@ -1,6 +1,8 @@
 const express = require('express');
 const colors = require('colors');
 const morgan = require('morgan');
+const cors = require('cors');
+
 const { connectDb } = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 
@@ -11,6 +13,7 @@ const app = express();
 connectDb();
 
 //middleware
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 

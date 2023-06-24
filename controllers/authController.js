@@ -6,13 +6,13 @@ exports.registerController = async (req, res) => {
     const { name, email, password, phone, address } = req.body;
     //validation
     if (!name || !email || !password || !phone || !address) {
-      return res.send({ error: 'All fields are Requires' });
+      return res.send({ message: 'All fields are Requires' });
     }
     //existingUser
     const existingUser = await userModel.findOne({ email: email });
     if (existingUser) {
       return res.status(200).send({
-        success: true,
+        success: false,
         message: 'User Already Register. Please login',
       });
     }
