@@ -31,3 +31,23 @@ exports.isAdmin = async (req, res, next) => {
     });
   }
 };
+exports.isUser = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+    if (user.role !== 0) {
+      return res.status(401).send({
+        success: false,
+        message: "This is Protected route for users only",
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(401).send({
+      success: false,
+      error,
+      message: "Error in admin middelware",
+    });
+  }
+}

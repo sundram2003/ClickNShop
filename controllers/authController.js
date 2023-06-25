@@ -5,7 +5,7 @@ const JWT = require('jsonwebtoken');
 
 exports.registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
     //validation
     if (!name || !email || !password || !phone || !address) {
       return res.send({ message: 'All fields are Requires' });
@@ -177,7 +177,7 @@ exports.updateProfileController = async (req, res) => {
     //hash password
     const hashedPassword = password ? await hashPassword(password) : undefined;
     //update user in DB
-    const updatedUser = await userModel.findOneAndUpdate(req.user._id,
+    const updatedUser = await userModel.findByIdAndUpdate(req.user._id,
       {
         name: name || user.name,
         password: hashedPassword || user.password,
@@ -231,7 +231,7 @@ exports.getOrderController = async (req, res) => {
   }
 }
 
-//get all order -> controller
+//get all order -> controller -> for admin
 exports.getAllOrdersController = async (req, res) => {
   try {
     //just find all orders
@@ -241,7 +241,13 @@ exports.getAllOrdersController = async (req, res) => {
       .populate("buyer", "name")
       .sort({ createdAt: "-1" });
     //return orders in res
-    return res.json(orders);
+    return res.json(
+      {
+        success: true,
+        message: "Orders fetched Successfully",
+        orders,
+      }
+    );
 
   } catch (error) {
     console.log("Error in getAllOrderController: ", error);
