@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap");
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,8 +9,8 @@ font-family: 'Playfair Display', serif;  //->for navigation menu
 font-family: 'Poppins', sans-serif; */ /* for heading    */
 
 /* //navbar css */
-.navbar{
-  font-family: 'Playfair Display', serif;
+.navbar {
+  font-family: "Playfair Display", serif;
   font-size: 17px;
   line-height: 26px;
   text-transform: uppercase;
@@ -19,17 +19,17 @@ font-family: 'Poppins', sans-serif; */ /* for heading    */
   border-bottom: solid gray !important;
 }
 
-.nav-link{
+.nav-link {
   font-weight: 300 !important;
 }
 
-.active{
+.active {
   border-bottom: 2px solid black;
 }
 
-.navbar-brand{
+.navbar-brand {
   font-weight: 700;
-  font-family: 'roboto' , sans-serif;
+  font-family: "roboto", sans-serif;
   letter-spacing: 3px;
 }
 
@@ -96,4 +96,12 @@ font-family: 'Poppins', sans-serif; */ /* for heading    */
   display: flex;
   align-items: center;
   justify-content: center;
+}
+/* register */
+.register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  flex-direction: column;
 }
