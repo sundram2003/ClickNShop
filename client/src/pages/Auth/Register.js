@@ -25,8 +25,9 @@ const Register = () => {
         address,
         answer,
       });
-      if (response && response.data.success) {
-        toast.success(response.data && response.data.message);
+      if (response && response?.data?.success) {
+        toast.success(response?.data && response?.data?.message);
+        toast.success("User registered succefully");
         navigate("/login");
       } else {
         toast.error(response.data.message);

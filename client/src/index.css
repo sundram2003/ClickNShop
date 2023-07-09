@@ -105,3 +105,8 @@ font-family: 'Poppins', sans-serif; */ /* for heading    */
   height: 70vh;
   flex-direction: column;
 }
+/* products page */
+.product-link {
+  text-decoration: none !important;
+  color: black !important;
+}

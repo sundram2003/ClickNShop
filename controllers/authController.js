@@ -1,21 +1,21 @@
-const { hashPassword, comparePassword } = require('../helpers/authHelper');
-const userModel = require('../models/userModel');
-const orderModel = require('../models/orderModel');
-const JWT = require('jsonwebtoken');
+const { hashPassword, comparePassword } = require("../helpers/authHelper");
+const userModel = require("../models/userModel");
+const orderModel = require("../models/orderModel");
+const JWT = require("jsonwebtoken");
 
 exports.registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address, answer } = req.body;
     //validation
     if (!name || !email || !password || !phone || !address) {
-      return res.send({ message: 'All fields are Requires' });
+      return res.send({ message: "All fields are Requires" });
     }
     //check existingUser
     const existingUser = await userModel.findOne({ email: email });
     if (existingUser) {
       return res.status(200).send({
         success: false,
-        message: 'User Already Register. Please login',
+        message: "User Already Register. Please login",
       });
     }
     //hash the password
@@ -32,20 +32,18 @@ exports.registerController = async (req, res) => {
 
     return res.status(201).send({
       success: true,
-      message: 'User is Registered Successfully.',
+      message: "User is Registered Successfully.",
       user,
     });
-
   } catch (error) {
     console.log("Error in registrations : ", error);
     return res.status(500).send({
       success: false,
       message: "Error in Registration",
       error,
-    })
+    });
   }
-}
-
+};
 
 //POST LOGIN
 exports.loginController = async (req, res) => {
@@ -104,7 +102,7 @@ exports.loginController = async (req, res) => {
 //test controllers
 exports.testController = async (req, res) => {
   try {
-    res.send('Protected Route');
+    res.send("Protected Route");
   } catch (error) {
     console.log(error);
     res.send({ error });
@@ -133,7 +131,7 @@ exports.forgetPasswordController = async (req, res) => {
       return res.status(404).send({
         sucess: false,
         message: "Email or Answer is Wrong",
-      })
+      });
     }
     //hashPassword
     const hashedPassword = await hashPassword(newPassword);
@@ -142,9 +140,8 @@ exports.forgetPasswordController = async (req, res) => {
     //return response
     return res.status(200).send({
       success: true,
-      message: 'Password Reset Successfully',
-    })
-
+      message: "Password Reset Successfully",
+    });
   } catch (error) {
     console.log("Error in forget Password Controller: ", error);
     res.status(500).send({
@@ -153,7 +150,7 @@ exports.forgetPasswordController = async (req, res) => {
       error,
     });
   }
-}
+};
 
 //updateProfileController
 exports.updateProfileController = async (req, res) => {
@@ -171,13 +168,16 @@ exports.updateProfileController = async (req, res) => {
 
     //validation if password -> len >= 6
     if (password && password.length < 6) {
-      return res.json({ error: "Password is required and must be atleast 6 character" });
+      return res.json({
+        error: "Password is required and must be atleast 6 character",
+      });
     }
 
     //hash password
     const hashedPassword = password ? await hashPassword(password) : undefined;
     //update user in DB
-    const updatedUser = await userModel.findByIdAndUpdate(req.user._id,
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user._id,
       {
         name: name || user.name,
         password: hashedPassword || user.password,
@@ -191,9 +191,8 @@ exports.updateProfileController = async (req, res) => {
     return res.status(200).send({
       success: true,
       message: "Profile Updated Successfully",
-    })
-
-
+      updatedUser,
+    });
   } catch (error) {
     console.log("Error in updateProfile Controller : ", error);
     res.status(400).send({
@@ -202,8 +201,7 @@ exports.updateProfileController = async (req, res) => {
       error,
     });
   }
-}
-
+};
 
 //get Orders Controllers -> for user
 exports.getOrderController = async (req, res) => {
@@ -213,14 +211,12 @@ exports.getOrderController = async (req, res) => {
       .find({ buyer: req.user._id })
       .populate("products", "-photo")
       .populate("buyer", "name");
-    //return response 
+    //return response
     res.status(200).json({
       success: true,
       message: "all orders fetched successfully",
       orders,
     });
-
-
   } catch (error) {
     console.log("Error in getOrderController : ", error);
     res.status(500).send({
@@ -229,7 +225,7 @@ exports.getOrderController = async (req, res) => {
       error,
     });
   }
-}
+};
 
 //get all order -> controller -> for admin
 exports.getAllOrdersController = async (req, res) => {
@@ -241,14 +237,11 @@ exports.getAllOrdersController = async (req, res) => {
       .populate("buyer", "name")
       .sort({ createdAt: "-1" });
     //return orders in res
-    return res.json(
-      {
-        success: true,
-        message: "Orders fetched Successfully",
-        orders,
-      }
-    );
-
+    return res.json({
+      success: true,
+      message: "Orders fetched Successfully",
+      orders,
+    });
   } catch (error) {
     console.log("Error in getAllOrderController: ", error);
     res.status(500).send({
@@ -257,8 +250,7 @@ exports.getAllOrdersController = async (req, res) => {
       error,
     });
   }
-}
-
+};
 
 //order status -> controller
 
@@ -270,7 +262,7 @@ exports.orderStatusController = async (req, res) => {
     const orders = await orderModel.findByIdAndUpdate(
       orderId,
       { status },
-      { new: true },
+      { new: true }
     );
 
     return res.json(orders);
@@ -282,4 +274,4 @@ exports.orderStatusController = async (req, res) => {
       error,
     });
   }
-}
+};
