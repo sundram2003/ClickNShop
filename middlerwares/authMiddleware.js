@@ -1,15 +1,17 @@
-const JWT = require('jsonwebtoken');
-const userModel = require('../models/userModel');
+const JWT = require("jsonwebtoken");
+const userModel = require("../models/userModel");
 exports.requireSignIn = async (req, res, next) => {
   try {
-    const decode = JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
+    const decode = JWT.verify(
+      req.headers.authorization,
+      process.env.JWT_SECRET
+    );
     req.user = decode;
     next();
   } catch (error) {
     console.log("Error in Authorisation By JWT token : ", error);
-
   }
-}
+};
 //admin acceess
 exports.isAdmin = async (req, res, next) => {
   try {
@@ -50,4 +52,4 @@ exports.isUser = async (req, res, next) => {
       message: "Error in admin middelware",
     });
   }
-}
+};

@@ -7,3 +7,8 @@ in console.
 5-> req.params is not working so everything fetched by req.body
 6-> product filter may have error
 7-> search filter has been taught wrongly -> need modification
+
+8->toast is not working
+9.search is not working
+
+
