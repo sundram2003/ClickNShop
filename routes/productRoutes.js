@@ -1,8 +1,25 @@
-const express = require('express');
-const formidable = require('express-formidable');
-const { requireSignIn, isAdmin } = require('../middlerwares/authMiddleware');
-const { createProductController, updateProductController, getProductController, getSingleProductController, productPhotoController, productFilterController, productCountController, productListController, searchProductController, relatedProductController, productCategoryController, deleteProductController } = require('../controllers/productController');
-const { deleteCategoryController } = require('../controllers/categoryController');
+const express = require("express");
+const formidable = require("express-formidable");
+const { requireSignIn, isAdmin } = require("../middlerwares/authMiddleware");
+const {
+  brainTreePaymentController,
+  braintreeTokenController,
+  createProductController,
+  updateProductController,
+  getProductController,
+  getSingleProductController,
+  productPhotoController,
+  productFilterController,
+  productCountController,
+  productListController,
+  searchProductController,
+  relatedProductController,
+  productCategoryController,
+  deleteProductController,
+} = require("../controllers/productController");
+const {
+  deleteCategoryController,
+} = require("../controllers/categoryController");
 const router = express.Router();
 
 //********************************************* */
@@ -15,7 +32,7 @@ router.post(
   requireSignIn,
   isAdmin,
   formidable(),
-  createProductController,
+  createProductController
 );
 //updateProduct
 router.put(
@@ -23,24 +40,16 @@ router.put(
   requireSignIn,
   isAdmin,
   formidable(),
-  updateProductController,
+  updateProductController
 );
 
 //get products
-router.get(
-  "/get-product", getProductController,
-);
+router.get("/get-product", getProductController);
 
 //get single product
-router.get(
-  "/get-product/:slug",
-  getSingleProductController,
-);
+router.get("/get-product/:slug", getSingleProductController);
 //get-photo
-router.get(
-  "/product-photo/:pid",
-  productPhotoController,
-);
+router.get("/product-photo/:pid", productPhotoController);
 //delete rproduct
 router.delete("/delete-product/:pid", deleteProductController);
 
@@ -62,7 +71,11 @@ router.get("/related-product/:pid/:cid", relatedProductController);
 //category wise product
 router.get("/product-category/:slug", productCategoryController);
 
-
 //Payment routes -> not defined yet
+//token
+router.get("/braintree/token", braintreeTokenController);
+
+//payments
+router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 
 module.exports = router;

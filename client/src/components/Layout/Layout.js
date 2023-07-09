@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import { Helmet } from "react-helmet";
 // import "react-toastify/dist/ReactToastify.css";
 
-import Toaster from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
@@ -33,5 +33,5 @@ Layout.defaultProps = {
   title: "Ecommerce app - shop now",
   description: "mern stack project",
   keywords: "mern,react,node,mongodb",
-  author: "Techinfoyt",
+  author: "ClickNShop",
 };
